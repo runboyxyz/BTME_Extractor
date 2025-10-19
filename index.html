@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Extract Highfreq Audible — Web Decoder (by Runboy)</title>
+  <meta name="description" content="Browser DSP to demodulate ultrasonic cues to audible speech via Hilbert SSB, band-pass, zero-phase FIR, and music suppression." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Extract Highfreq Audible — Web Decoder <span class="byline">· by <b>Runboy</b></span></h1>
+      <div class="tag">Local-only · processed entirely in your browser</div>
+    </header>
+
+    <main class="grid">
+      <!-- Controls -->
+      <section class="card">
+        <div class="title"><h2>Controls</h2></div>
+
+        <div class="row">
+          <label>Audio file
+            <input id="file" type="file" accept="audio/*,.wav,.flac,.aiff,.aif,.mp3" />
+          </label>
+          <label>Start time t0 (s)
+            <input id="t0" type="number" value="39" step="0.01" />
+          </label>
+          <label>End time t1 (s)
+            <input id="t1" type="number" value="42" step="0.01" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Enable DSP (Band-pass → SSB → LP → Suppress → Gain)
+            <select id="enableDSP">
+              <option value="1" selected>On</option>
+              <option value="0">Off (trim only)</option>
+            </select>
+          </label>
+
+          <label>Band-pass LOW (Hz)
+            <input id="hp" type="number" value="20000" step="50" />
+          </label>
+          <label>Band-pass HIGH (Hz)
+            <input id="preLP" type="number" value="23900" step="50" />
+          </label>
+          <label>Shift / LO (Hz)
+            <input id="shift" type="number" value="22050" step="50" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Post-mix LP (Hz)
+            <input id="lp" type="number" value="6000" step="50" />
+          </label>
+          <label>Gain (dB)
+            <input id="gain" type="number" value="12" step="1" />
+          </label>
+          <label>Fade (ms)
+            <input id="fade" type="number" value="10" step="1" />
+          </label>
+          <label>Output sample rate (Hz)
+            <input id="outsr" type="number" value="22050" step="50" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label class="switch">
+            <input id="musicKill" type="checkbox" checked />
+            <span>Music suppression (speech HP 180 Hz + adaptive lift)</span>
+          </label>
+        </div>
+
+        <div class="row">
+          <button class="btn ghost" id="btn1m">Load 1-minute defaults</button>
+          <button class="btn ghost" id="btn3m">Load 3-minute defaults</button>
+          <button class="btn ghost" id="preview">Preview</button>
+          <button class="btn" id="process">Process & Download</button>
+          <span id="status"></span>
+        </div>
+
+        <pre id="log">(log)</pre>
+
+        <footer class="footer">
+          <div>
+            <span class="pill">Hilbert SSB (fixed)</span>
+            <span class="pill">Zero-phase FIR (reflection)</span>
+            <span class="pill">DC-block 30 Hz</span>
+            <span class="pill">Speech HP 180 Hz (optional)</span>
+          </div>
+          <div>© 2025 <b>Runboy</b></div>
+        </footer>
+      </section>
+
+      <!-- Explanation -->
+      <aside class="card">
+        <div class="title"><h2>What this page does</h2></div>
+        <p class="sub">
+          This utility mirrors the original Python chain to reveal a hidden voice in
+          <em>Beyond the Map’s Edge — Arkade Music</em>. Two captures are common:
+          a ~1-minute and a ~3-minute version; the 3-minute decode is typically cleaner.
+        </p>
+        <div class="callout">
+          <ol class="sub">
+            <li><b>Band-pass 20–23.9 kHz</b> isolates the ultrasonic region.</li>
+            <li><b>Hilbert SSB heterodyne</b> shifts by LO (default 22,050 Hz) to baseband.</li>
+            <li><b>Zero-phase LP</b> (~5–6 kHz) keeps speech and rejects images.</li>
+            <li><b>Music suppression</b>: speech HP 180 Hz + adaptive lift to reduce program bleed.</li>
+            <li><b>Gain</b>, <b>fade-in/out</b>, and optional <b>resample</b> finalize output.</li>
+          </ol>
+        </div>
+        <p class="sub">
+          If program music breaks through: narrow band-pass slightly (e.g., 20.3–23.6 kHz) and try LP = 4.8–5.2 kHz.
+          Keep “Music suppression” enabled for speech-weighted dynamics.
+        </p>
+      </aside>
+    </main>
+  </div>
+
+  <script src="dsp.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+:root{
+  --bg:#0b0f15; --card:#121826; --ink:#e9eef6; --muted:#a9b6c8;
+  --accent:#6cc6ff; --accent2:#2fa4f5; --line:#273142; --ok:#61f5a8; --bad:#ff8c8c;
+}
+
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+.container{max-width:1120px;margin:0 auto;padding:28px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+h1{margin:0;font-size:1.35rem;color:var(--accent)}
+.byline{opacity:.85}
+.tag{padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem}
+
+.grid{display:grid;gap:16px;grid-template-columns:1.15fr .85fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.title{display:flex;gap:10px;align-items:center;margin:0 0 8px}
+.title h2{font-size:1.05rem;margin:0}
+.sub{color:var(--muted);font-size:.92rem;line-height:1.5}
+
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+label{display:flex;flex-direction:column;gap:6px;font-size:.95rem}
+input[type="number"],input[type="file"],select{
+  background:#0d1117;color:var(--ink);border:1px solid var(--line);
+  border-radius:10px;padding:10px 12px;min-width:160px
+}
+
+.btn{background:linear-gradient(180deg,var(--accent),var(--accent2));color:#04121d;border:0;border-radius:12px;
+     font-weight:700;padding:10px 14px;cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+
+#status{min-height:1.2em;margin-left:8px}
+.ok{color:var(--ok)} .bad{color:var(--bad)}
+
+#log{margin-top:10px;background:#0b0e14;border:1px solid var(--line);border-radius:12px;padding:10px;
+     font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;min-height:120px;max-height:280px;overflow:auto;white-space:pre-wrap}
+
+.footer{margin-top:14px;color:var(--muted);font-size:.9rem;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pill{display:inline-block;padding:4px 8px;border:1px solid var(--line);border-radius:999px;margin-right:6px;color:var(--muted);font-size:.82rem}
+.callout{padding:10px;border:1px dashed var(--line);border-radius:12px;background:#0f1420}
+
+.switch{display:flex;gap:8px;align-items:center}
