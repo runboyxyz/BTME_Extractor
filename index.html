@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+  <title>BTME Ultrasonic Decoder — Studio Edition</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <!-- Introductory notice block -->
+<section class="intro-banner">
+  <h1>BTME Ultrasonic Decoder — Studio Edition</h1>
+
+  <p>
+    This browser-based decoder demonstrates the process used to reveal high-frequency modulation
+    patterns believed to be present in audio connected to
+    <em>Beyond the Map’s Edge</em>. It reproduces the same heterodyne filtering and
+    down-conversion techniques used in studio analysis.
+  </p>
+
+  <p class="credit">
+    <strong>Created by Runboy (Discord)</strong> — for independent research and documentation purposes.
+  </p>
+
+  <p class="note">
+    🎧 For meaningful results, use <strong>lossless 48 kHz audio files</strong> such as WAV or FLAC.
+    Compressed or lower-rate formats (e.g., MP3, AAC, streaming rips) usually discard ultrasonic data,
+    making decoding ineffective.
+  </p>
+
+  <p class="warning">
+    ⚠️ Use only legitimate and properly licensed audio sources. This tool is intended for analysis and
+    educational study of publicly released material. Processing unauthorized, private, or unrelated content
+    is not supported and may lead to meaningless or misleading results.
+  </p>
+
+  <p class="disclaimer">
+    Use at your own discretion. The creator assumes no responsibility for misuse, copyright violations,
+    or results obtained from unauthorized or non-compliant material.
+  </p>
+</section>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Upload & Time Window</h2>
+      <div class="field">
+        <label for="file">Audio file (prefer 48 kHz WAV)</label>
+        <input id="file" type="file" accept=".wav,.mp3,.m4a,.flac,.ogg,.aac,audio/*" />
+      </div>
+      <div class="grid two">
+        <div class="field">
+          <label for="t0">Start (t₀, seconds)</label>
+          <input id="t0" type="number" step="0.1" placeholder="e.g. 38" />
+        </div>
+        <div class="field">
+          <label for="t1">End (t₁, seconds — blank = end)</label>
+          <input id="t1" type="number" step="0.1" placeholder="e.g. 42" />
+        </div>
+      </div>
+      <div class="button-row">
+        <button id="btn1m" class="btn secondary">Load 1-minute defaults</button>
+        <button id="btn3m" class="btn secondary">Load 3-minute defaults</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>DSP (Heterodyne → Baseband)</h2>
+      <p class="explain">
+        This build mirrors the pipeline from the Python decoder initially used for discovery:
+        <strong>band-pass the ultrasonic band → real cosine mix-down → post low-pass → normalize</strong>.
+        We keep short, musical IIR (biquad) cascades to minimize ringing and preserve the natural tone you prefer.
+      </p>
+
+      <div class="grid three">
+        <div class="field">
+          <label for="bpLo">Band-pass: Low cut (Hz)</label>
+          <input id="bpLo" type="number" step="10" value="20000" />
+        </div>
+        <div class="field">
+          <label for="bpHi">Band-pass: High cut (Hz)</label>
+          <input id="bpHi" type="number" step="10" value="23900" />
+        </div>
+        <div class="field">
+          <label for="fc">Carrier / LO (Hz)</label>
+          <input id="fc" type="number" step="10" value="22050" />
+        </div>
+      </div>
+
+      <div class="grid three">
+        <div class="field">
+          <label for="lp">Post low-pass (Hz)</label>
+          <input id="lp" type="number" step="50" value="5000" />
+        </div>
+        <div class="field">
+          <label for="gain">Gain (dB)</label>
+          <input id="gain" type="number" step="1" value="8" />
+        </div>
+        <div class="field">
+          <label for="outsr">Output sample rate (Hz)</label>
+          <input id="outsr" type="number" step="50" placeholder="(leave blank = source)" />
+        </div>
+      </div>
+
+      <div class="grid two">
+        <div class="field">
+          <label for="enableDSP">Enable DSP</label>
+          <select id="enableDSP">
+            <option value="1" selected>On</option>
+            <option value="0">Off (trim only)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fade">Fade-in/out (ms)</label>
+          <input id="fade" type="number" step="1" value="10" />
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Run</h2>
+      <div class="button-row">
+        <button id="preview" class="btn primary">Preview</button>
+        <button id="process" class="btn primary">Process &amp; Download</button>
+      </div>
+      <div class="status-row">
+        <span id="status" class="status">Ready.</span>
+      </div>
+      <audio id="player" controls></audio>
+
+      <h3>Log</h3>
+      <pre id="log" class="log" aria-live="polite">(log)</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Notes & Responsible Use</h2>
+      <ul class="notes">
+        <li>Use a <strong>48 kHz</strong> source to retain the 20–24 kHz band.</li>
+        <li>Recommended bands for BTME material: Low ≈ <strong>20.2 kHz</strong>, High ≈ <strong>23.8 kHz</strong>;
+          LO ≈ <strong>22.05 kHz</strong>; Post-LP ≈ <strong>5.0–5.2 kHz</strong>.</li>
+        <li>Defaults: 1-minute (38–42 s), 3-minute (173–177 s).</li>
+        <li>If a clip is very long, you’ll be warned to trim (browser performance).</li>
+      </ul>
+      <p class="legal">
+        This tool is for educational and research use. Only process audio you are authorized to use.
+        Do not use this project to violate privacy, terms of service, copyright, or applicable law.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">© 2025 Runboy (Discord)</footer>
+
+  <!-- Load order matters: dsp.js BEFORE app.js -->
+  <script src="dsp.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
