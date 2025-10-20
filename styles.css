@@ -88,3 +88,9 @@ audio{ margin-top:12px; width:100% }
   margin-top: 0.8rem;
   font-style: italic;
 }
+.intro-banner .note {
+  color: #9adfff;
+  font-size: 0.95rem;
+  margin-top: 0.8rem;
+  line-height: 1.5;
+}
