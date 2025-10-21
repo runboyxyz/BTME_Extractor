@@ -68,7 +68,7 @@ function run(preview){
       let bpHi = +($('bpHi').value||23900);
       let fc   = +($('fc').value||22050);
       const lp = +($('lp').value||5000);
-      const gain = +($('gain').value||6);
+      const gain = +($('gain').value||3);
       const fade = +($('fade').value||10);
       const outSR = parseInt(($('outsr').value||sr),10);
 
@@ -144,13 +144,13 @@ $('btn1m').addEventListener('click', ()=>{
   $('t0').value='38'; $('t1').value='42';
   $('bpLo').value='20200'; $('bpHi').value='23800';
   $('fc').value='22050'; $('lp').value='5000';
-  $('gain').value='6'; $('fade').value='10'; $('outsr').value='';
+  $('gain').value='3'; $('fade').value='10'; $('outsr').value='';
   logln('Loaded 1-minute defaults (38–42 s).');
 });
 $('btn3m').addEventListener('click', ()=>{
   $('t0').value='173'; $('t1').value='177';
   $('bpLo').value='20200'; $('bpHi').value='23800';
   $('fc').value='22050'; $('lp').value='5000';
-  $('gain').value='6'; $('fade').value='10'; $('outsr').value='';
+  $('gain').value='3'; $('fade').value='10'; $('outsr').value='';
   logln('Loaded 3-minute defaults (173–177 s).');
 });
