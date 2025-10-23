@@ -5,7 +5,7 @@
 **Credit:** © 2025 **Runboy (Discord)** 
 
 
-🔗 **Live Decoder:** [https://github.com/runboyxyz/BTME_Extractor](https://github.com/runboyxyz/BTME_Extractor)
+🔗 **Live Decoder:** [https://runboyxyz.github.io/BTME_Extractor/](https://runboyxyz.github.io/BTME_Extractor/)
 
 ---
 
