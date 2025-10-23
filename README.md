@@ -2,7 +2,10 @@
 
 **Version:** v1.0.0 – Final Studio Edition  
 **Status:** ✅ Stable release  
-**Credit:** © 2025 **Runboy (Discord)**  
+**Credit:** © 2025 **Runboy (Discord)** 
+
+
+🔗 **Live Decoder:** [https://github.com/runboyxyz/BTME_Extractor](https://github.com/runboyxyz/BTME_Extractor)
 
 ---
 
